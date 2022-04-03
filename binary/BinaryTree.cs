@@ -1,19 +1,60 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace BinarySearchTree
 {
-    internal class BinaryTree
+    class BinaryTree
     {
-        public object Root { get; internal set; }
 
-        internal void Add(int v)
+        public Node Root { get; set; }
+
+        public bool Add(int value)
         {
-            throw new NotImplementedException();
+            Node before = null, after = this.Root;
+            while (after != null)
+            {
+                before = after;
+                if (value < after.Data)
+                    after = after.LeftNode;
+                else if (value > after.Data)
+                    after = after.RightNode;
+                else
+                {
+                    return false;
+                }
+            }
+
+            Node newNode = new Node();
+            newNode.Data = value;
+
+            if (this.Root == null)
+            {
+                this.Root = newNode;
+            }
+            else
+            {
+                if (value < before.Data)
+                    before.LeftNode = newNode;
+                else
+                    before.RightNode = newNode;
+
+            }
+            return true;
         }
 
-        internal void TraversePreorder(object root)
+        public void TraversePreorder(Node Parent)
         {
-            throw new NotImplementedException();
+            if (Parent != null)
+            {
+                if (Parent.Data == 3)
+                {
+                    Console.WriteLine("Data found");
+                }
+                Console.WriteLine(Parent.Data + " ");
+                TraversePreorder(Parent.LeftNode);
+                TraversePreorder(Parent.RightNode);
+            }
         }
     }
 }
